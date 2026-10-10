@@ -1,0 +1,5 @@
+# Ganti dengan domain Anda (A record domain -> IP server). HTTPS otomatis via Let's Encrypt.
+api.kopicandukangen.id {
+	encode gzip
+	reverse_proxy api:3000
+}
