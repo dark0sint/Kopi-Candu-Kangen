@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "Kopi Candu Kangen",
+    "slug": "kopi-candu-kangen",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": { "image": "./assets/splash.png", "resizeMode": "contain", "backgroundColor": "#2A1B17" },
+    "android": {
+      "package": "id.kopicandukangen.app",
+      "versionCode": 1,
+      "adaptiveIcon": { "foregroundImage": "./assets/adaptive-icon.png", "backgroundColor": "#2A1B17" },
+      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"],
+      "config": { "googleMaps": { "apiKey": "GANTI_DENGAN_GOOGLE_MAPS_API_KEY" } }
+    },
+    "plugins": [
+      "expo-secure-store",
+      ["expo-location", { "locationAlwaysAndWhenInUsePermission": "Kopi Candu Kangen memakai lokasi untuk menentukan alamat antar dan outlet terdekat." }]
+    ]
+  }
+}
