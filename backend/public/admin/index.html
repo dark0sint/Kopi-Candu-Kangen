@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin - Kopi Candu Kangen</title>
+<style>
+:root{--roast:#2A1B17;--latte:#D8B88F;--foam:#F3EDE4;--pink:#E8487E;--ok:#2E7D5B}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;background:var(--foam);color:var(--roast)}
+header{background:var(--roast);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+header b{font-size:18px}header b span{color:var(--pink)}
+nav button,.btn{border:0;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:600;background:var(--latte);color:var(--roast)}
+nav button.on{background:var(--pink);color:#fff}.btn.p{background:var(--pink);color:#fff}.btn.g{background:var(--ok);color:#fff}.btn.r{background:#fff;color:#b3261e;border:1px solid #b3261e}
+main{max-width:1000px;margin:16px auto;padding:0 12px}
+.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px #0002}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.sp{justify-content:space-between}
+.tag{padding:2px 8px;border-radius:99px;background:var(--latte);font-size:12px;font-weight:700}
+input,select{padding:9px;border:1px solid #ccc;border-radius:8px;font-size:15px}
+#login{max-width:340px;margin:80px auto}#login input{width:100%;margin-bottom:10px}
+small{color:#6b5a52}table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid #eee;text-align:left}
+</style></head><body>
+<header><b>Kopi Candu <span>Kangen</span> · Admin</b><nav id="nav" hidden><button data-t="orders" class="on">Pesanan</button> <button data-t="menu">Menu</button> <button id="out">Keluar</button></nav></header>
+<main>
+<div id="login" class="card"><h3>Masuk admin</h3><input id="em" placeholder="Email" type="email"><input id="pw" placeholder="Password" type="password"><button class="btn p" id="go" style="width:100%">Masuk</button><p id="err" style="color:#b3261e"></p></div>
+<div id="app" hidden><div id="orders"></div><div id="menu" hidden></div></div>
+</main>
+<script>
+let T=localStorage.getItem('kck_admin'),couriers=[],tab='orders',timer;
+const $=s=>document.querySelector(s),rp=n=>'Rp'+Number(n).toLocaleString('id-ID');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function api(p,m='GET',b){const r=await fetch('/api'+p,{method:m,headers:{'Content-Type':'application/json',Authorization:'Bearer '+T},body:b?JSON.stringify(b):undefined});const j=await r.json();if(!r.ok){if(r.status==401)logout();throw new Error(j.error)}return j}
+function logout(){localStorage.removeItem('kck_admin');location.reload()}
+$('#out').onclick=logout;
+$('#go').onclick=async()=>{try{const r=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:$('#em').value,password:$('#pw').value})});const j=await r.json();if(!r.ok)throw new Error(j.error);if(j.user.role!=='admin')throw new Error('Bukan akun admin');T=j.token;localStorage.setItem('kck_admin',T);start()}catch(e){$('#err').textContent=e.message}};
+document.querySelectorAll('nav [data-t]').forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll('nav [data-t]').forEach(x=>x.classList.toggle('on',x===b));$('#orders').hidden=tab!=='orders';$('#menu').hidden=tab!=='menu';load()});
+const LBL={pending_payment:'Menunggu bayar',placed:'Baru masuk',preparing:'Diracik',ready:'Siap',delivering:'Diantar',completed:'Selesai',cancelled:'Batal'};
+const NEXT=(o)=>({placed:['preparing','Mulai racik'],preparing:['ready',o.type==='pickup'?'Siap diambil':'Siap diantar'],ready:o.type==='pickup'?['completed','Sudah diambil']:['delivering','Berangkat'],delivering:['completed','Selesai']})[o.status];
+async function load(){try{tab==='orders'?await loadOrders():await loadMenu()}catch(e){console.log(e)}}
+async function loadOrders(){const [os,cs]=await Promise.all([api('/admin/orders'),api('/admin/couriers')]);couriers=cs;
+$('#orders').innerHTML=os.length?os.map(o=>{const n=NEXT(o);return `<div class="card"><div class="row sp"><b>${esc(o.code)}</b><span class="tag">${LBL[o.status]}</span></div>
+<small>${esc(o.outlet_name)} · ${o.type==='pickup'?'Ambil sendiri':'Antar'} · ${esc(o.customer_name)} ${esc(o.customer_phone)}</small>
+${o.scheduled_at?`<div><small>Jadwal: ${new Date(o.scheduled_at).toLocaleString('id-ID')}</small></div>`:''}
+<ul>${o.items.map(i=>`<li>${i.qty}× ${esc(i.name)} <small>${esc(i.options_text)}</small></li>`).join('')}</ul>
+${o.address?`<div>📍 ${esc(o.address)}</div>`:''}${o.notes?`<div>📝 ${esc(o.notes)}</div>`:''}
+<div class="row sp" style="margin-top:8px"><span><b>${rp(o.total)}</b> · ${o.payment_method.toUpperCase()} · ${o.payment_status==='paid'?'✅ lunas':'belum bayar'}</span>
+<span class="row">${o.status==='pending_payment'?`<button class="btn g" onclick="act(${o.id},'paid')">Konfirmasi bayar</button>`:''}
+${o.type==='delivery'&&['placed','preparing','ready'].includes(o.status)?`<select onchange="setC(${o.id},this.value)"><option value="">Pilih kurir</option>${cs.map(c=>`<option value="${c.id}" ${c.id===o.courier_id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>`:''}
+${n?`<button class="btn p" onclick="act(${o.id},'status','${n[0]}')">${n[1]}</button>`:''}
+${['placed','preparing','pending_payment'].includes(o.status)?`<button class="btn r" onclick="if(confirm('Batalkan pesanan?'))act(${o.id},'status','cancelled')">Batalkan</button>`:''}</span></div></div>`}).join(''):'<div class="card">Belum ada pesanan aktif.</div>'}
+async function act(id,k,s){try{k==='paid'?await api(`/admin/orders/${id}/paid`,'PATCH'):await api(`/admin/orders/${id}/status`,'PATCH',{status:s});load()}catch(e){alert(e.message)}}
+async function setC(id,c){if(!c)return;try{await api(`/admin/orders/${id}/courier`,'PATCH',{courier_id:+c})}catch(e){alert(e.message)}}
+async function loadMenu(){const ps=await api('/admin/products');$('#menu').innerHTML='<div class="card"><table><tr><th>Outlet</th><th>Menu</th><th>Harga</th><th>Tersedia</th></tr>'+ps.map(p=>`<tr><td>${esc(p.outlet.replace('Kopi Candu Kangen - ',''))}</td><td>${esc(p.name)}</td><td><input type="number" value="${p.price}" style="width:100px" onchange="api('/admin/products/${p.id}','PATCH',{price:this.value})"></td><td><input type="checkbox" ${p.available?'checked':''} onchange="api('/admin/products/${p.id}','PATCH',{available:this.checked})"></td></tr>`).join('')+'</table></div>'}
+function start(){$('#login').hidden=true;$('#app').hidden=false;$('#nav').hidden=false;load();timer=setInterval(()=>{if(tab==='orders')load()},8000)}
+if(T)start();
+</script></body></html>
