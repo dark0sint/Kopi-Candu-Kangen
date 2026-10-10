@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Desain UI · Kopi Candu Kangen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--roast:#2A1B17;--latte:#D8B88F;--foam:#F3EDE4;--pink:#E8487E;--ok:#2E7D5B;--muted:#7A6A62;--line:#E6DCCF;
+--page:#E9DFD2;--ink:#2A1B17;--ink2:#6b5a52;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#17100D;--ink:#F3EDE4;--ink2:#BFAFA3}}
+:root[data-theme="dark"]{--page:#17100D;--ink:#F3EDE4;--ink2:#BFAFA3}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:'Instrument Sans',system-ui,sans-serif;line-height:1.5}
+h1,h2,.d{font-family:'Bricolage Grotesque','Instrument Sans',sans-serif}
+.wrap{max-width:1240px;margin:0 auto;padding:40px 20px 64px}
+h1{font-size:clamp(40px,7vw,84px);line-height:.95;margin:0 0 14px;font-weight:800;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--pink)}
+.lead{max-width:56ch;color:var(--ink2);font-size:18px;margin:0 0 28px}
+.tokens{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:44px}
+.sw{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:99px;background:color-mix(in srgb,var(--ink) 7%,transparent);font-size:13px}
+.sw i{width:24px;height:24px;border-radius:50%;display:block;border:1px solid #0002}
+.rail{display:flex;gap:28px;overflow-x:auto;padding:6px 4px 24px;scroll-snap-type:x proximity}
+.col{flex:0 0 auto;scroll-snap-align:start}
+.cap{font-weight:600;margin:14px 4px 0;max-width:290px}.cap small{display:block;color:var(--ink2);font-weight:400}
+.phone{width:290px;height:600px;border-radius:38px;background:#111;padding:9px;box-shadow:0 18px 40px #0004}
+.scr{width:100%;height:100%;border-radius:30px;overflow:hidden;background:var(--foam);color:var(--roast);position:relative;display:flex;flex-direction:column;font-size:12.5px}
+.sb{display:flex;justify-content:space-between;padding:9px 18px 4px;font-size:11px;font-weight:600}
+.dark{background:var(--roast);color:#fff}
+.btn{display:block;text-align:center;background:var(--pink);color:#fff;font-weight:700;border-radius:13px;padding:12px;font-size:14px}
+.btn.o{background:#fff;color:var(--roast);border:1.5px solid var(--roast)}
+.chip{display:inline-block;padding:6px 12px;border-radius:99px;background:#fff;border:1px solid var(--line);font-weight:600;margin-right:6px;font-size:12px;white-space:nowrap}
+.chip.on{background:var(--roast);color:#fff;border-color:var(--roast)}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:11px;margin:0 12px 9px}
+.row{display:flex;align-items:center;gap:10px}.sp{justify-content:space-between}
+.thumb{width:52px;height:52px;border-radius:12px;background:var(--latte);display:grid;place-items:center;font-size:26px;flex:none}
+.pill{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:99px;background:#DDF1E8;color:var(--ok)}
+.add{background:var(--pink);color:#fff;font-weight:700;border-radius:10px;padding:7px 11px;font-size:12px}
+.tabs{margin-top:auto;display:flex;justify-content:space-around;background:#fff;border-top:1px solid var(--line);padding:9px 0 12px;font-size:10.5px;color:var(--muted)}
+.tabs b{color:var(--pink)}
+.map{height:150px;margin:0 12px 10px;border-radius:16px;position:relative;overflow:hidden;background:#E4DACB}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.dot{position:absolute;width:16px;height:16px;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px #0005}
+.step{display:flex;gap:10px;align-items:center;padding:5px 0}.step i{width:18px;height:18px;border-radius:50%;background:var(--line);display:grid;place-items:center;color:#fff;font-size:10px;font-style:normal;flex:none}.step.d i{background:var(--pink)}.step.n{font-weight:700}
+.ph{padding:0 14px}
+.nt{margin-top:40px;max-width:70ch;color:var(--ink2)}
+@media (prefers-reduced-motion:no-preference){.dot.c{animation:p 1.8s ease-in-out infinite}@keyframes p{50%{transform:scale(1.25)}}}
+</style></head><body>
+<div class="wrap">
+<h1>Kopi Candu <em>Kangen</em></h1>
+<p class="lead">Desain aplikasi pesan-antar minuman: dari pilih outlet, racik pesanan, sampai kurir tiba di depan pintu. Layar di bawah sama dengan yang ada di kode aplikasi.</p>
+<div class="tokens">
+<span class="sw"><i style="background:#2A1B17"></i>Roast #2A1B17</span>
+<span class="sw"><i style="background:#D8B88F"></i>Latte #D8B88F</span>
+<span class="sw"><i style="background:#F3EDE4"></i>Foam #F3EDE4</span>
+<span class="sw"><i style="background:#E8487E"></i>Kangen #E8487E</span>
+<span class="sw"><i style="background:#2E7D5B"></i>Buka #2E7D5B</span>
+<span class="sw">Bricolage Grotesque + Instrument Sans</span>
+</div>
+
+<div class="rail">
+<!-- 1 Masuk -->
+<div class="col"><div class="phone"><div class="scr dark">
+<div class="sb"><span>9:41</span><span>●●●</span></div>
+<div style="padding:70px 22px 0"><div class="d" style="font-size:44px;line-height:.95;font-weight:800">Kopi Candu<br><span style="color:var(--pink)">Kangen</span></div>
+<p style="color:var(--latte);font-size:13px;margin:12px 0 0">Sekali sruput, pengen lagi. Pesan, kami antar.</p></div>
+<div style="margin-top:auto;background:var(--foam);color:var(--roast);border-radius:24px 24px 0 0;padding:18px 16px 22px">
+<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:9px;color:var(--muted)">Email</div>
+<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px;color:var(--muted)">Password</div>
+<div class="btn">Masuk</div><p style="text-align:center;font-weight:700;margin:12px 0 0">Belum punya akun? Daftar</p></div>
+</div></div><div class="cap">Masuk<small>Email dan password. Akun kurir dan admin memakai pintu yang sama.</small></div></div>
+
+<!-- 2 Beranda -->
+<div class="col"><div class="phone"><div class="scr">
+<div class="dark" style="padding-bottom:16px;border-radius:0 0 24px 24px"><div class="sb"><span>9:41</span><span>●●●</span></div>
+<div class="ph"><small style="color:var(--latte)">Halo, Rina</small><div class="d" style="font-size:21px;font-weight:800;margin:3px 0 9px">Lagi kangen kopi apa hari ini?</div>
+<div style="background:#fff;color:var(--muted);border-radius:13px;padding:11px">Cari outlet atau daerah</div></div></div>
+<div style="padding:12px"><span class="chip on">Terdekat</span><span class="chip">Rating tertinggi</span></div>
+<div class="card"><div class="row sp"><b style="font-size:15px">Kedaton</b><span class="pill">Buka</span></div><div style="color:var(--muted);margin:3px 0 6px">Jl. ZA. Pagar Alam, Kedaton</div><b>★ 4.8 · 0.9 km · 8:00-22:00</b></div>
+<div class="card"><div class="row sp"><b style="font-size:15px">Tanjung Karang</b><span class="pill">Buka</span></div><div style="color:var(--muted);margin:3px 0 6px">Jl. Raden Intan</div><b>★ 4.7 · 6.2 km · 8:00-22:00</b></div>
+<div class="card"><div class="row sp"><b style="font-size:15px">Teluk Betung</b><span class="pill" style="background:#F3D9D6;color:#B3261E">Tutup</span></div><div style="color:var(--muted);margin:3px 0 6px">Jl. Yos Sudarso</div><b>★ 4.6 · 9.8 km</b></div>
+<div class="tabs"><b>🏠<br>Beranda</b><span>🧾<br>Pesanan</span><span>👤<br>Akun</span></div>
+</div></div><div class="cap">Beranda<small>Cari outlet, urutkan berdasarkan jarak atau rating, lihat jam buka.</small></div></div>
+
+<!-- 3 Menu -->
+<div class="col"><div class="phone"><div class="scr">
+<div class="dark"><div class="sb"><span>9:41</span><span>●●●</span></div><div style="padding:6px 16px 12px;font-weight:700;font-size:15px">‹ &nbsp;Kedaton</div></div>
+<div style="padding:11px 12px"><span class="chip on">☕ Kopi</span><span class="chip">🍵 Teh</span><span class="chip">🥤 Non-Kopi</span></div>
+<div class="card row"><div class="thumb">☕</div><div style="flex:1"><b>Kopi Susu Candu</b><div style="color:var(--muted);font-size:11px">Espresso, susu segar, gula aren.</div><b>Rp18.000</b></div><span class="add">Tambah</span></div>
+<div class="card row"><div class="thumb">☕</div><div style="flex:1"><b>Kopi Kangen</b><div style="color:var(--muted);font-size:11px">Karamel asin, bikin balik lagi.</div><b>Rp25.000</b></div><span class="add">Tambah</span></div>
+<div class="card row"><div class="thumb">☕</div><div style="flex:1"><b>Aren Latte</b><div style="color:var(--muted);font-size:11px">Latte dengan gula aren pekat.</div><b>Rp24.000</b></div><span class="add">Tambah</span></div>
+<div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;padding:14px 16px 16px;box-shadow:0 -8px 24px #0003">
+<div class="d" style="font-size:18px;font-weight:800">Kopi Kangen</div>
+<div style="font-weight:700;margin-top:8px">Level Es</div><div style="margin-top:5px"><span class="chip on">Normal</span><span class="chip">Less Ice</span><span class="chip">No Ice</span></div>
+<div style="font-weight:700;margin-top:8px">Topping</div><div style="margin-top:5px"><span class="chip on">Extra Shot +5.000</span><span class="chip">Boba +4.000</span></div>
+<div class="btn" style="margin-top:12px">Masukkan keranjang · Rp30.000</div></div>
+</div></div><div class="cap">Menu dan opsi<small>Level es, tingkat manis, dan topping. Harga ikut berubah saat opsi dipilih.</small></div></div>
+
+<!-- 4 Checkout -->
+<div class="col"><div class="phone"><div class="scr">
+<div class="dark"><div class="sb"><span>9:41</span><span>●●●</span></div><div style="padding:6px 16px 12px;font-weight:700;font-size:15px">‹ &nbsp;Pesanan kamu</div></div>
+<div style="padding:10px 12px 6px" class="row"><span class="chip on">🛵 Diantar</span><span class="chip">🏪 Ambil sendiri</span></div>
+<div class="map"><svg viewBox="0 0 266 150"><path d="M0 100 Q60 70 120 90 T266 60" stroke="#fff" stroke-width="9" fill="none"/><path d="M80 0 L110 150" stroke="#fff" stroke-width="7" fill="none"/><path d="M170 0 Q190 80 230 150" stroke="#fff" stroke-width="6" fill="none"/></svg>
+<span class="dot" style="left:70px;top:88px;background:#2A1B17"></span><span class="dot" style="left:190px;top:48px;background:var(--pink)"></span></div>
+<div style="padding:0 14px 6px;color:var(--muted)">📍 Jl. ZA. Pagar Alam No. 12 · 2,1 km · ongkir Rp7.500</div>
+<div style="padding:0 12px 8px;white-space:nowrap;overflow:hidden"><span class="chip on">Sekarang</span><span class="chip">30 menit</span><span class="chip">Besok 08:00</span></div>
+<div class="card" style="border-color:var(--pink);background:#FDEAF1"><b>📱 QRIS</b></div>
+<div class="card"><b>💵 Bayar di tempat</b></div>
+<div style="margin-top:auto;padding:12px;background:#fff;border-top:1px solid var(--line)"><div class="row sp" style="margin-bottom:8px"><span>Subtotal Rp30.000 + ongkir</span><b style="font-size:15px">Rp37.500</b></div><div class="btn">Pesan sekarang</div></div>
+</div></div><div class="cap">Checkout<small>Antar atau ambil sendiri, titik di peta, jadwal, dan pembayaran digital atau COD.</small></div></div>
+
+<!-- 5 Lacak -->
+<div class="col"><div class="phone"><div class="scr">
+<div class="dark"><div class="sb"><span>9:41</span><span>●●●</span></div><div style="padding:6px 16px 12px;font-weight:700;font-size:15px">‹ &nbsp;Lacak pesanan</div></div>
+<div class="card" style="margin-top:12px"><small style="color:var(--muted)">Kode pesanan</small><div class="d" style="font-size:20px;font-weight:800">KCK-261010-4821</div><b style="color:var(--pink)">Kurir menuju lokasimu</b><div style="color:var(--muted)">Kurir: Budi</div></div>
+<div class="map"><svg viewBox="0 0 266 150"><path d="M0 100 Q60 70 120 90 T266 60" stroke="#fff" stroke-width="9" fill="none"/><path d="M60 110 Q120 85 190 55" stroke="var(--pink)" stroke-width="3" stroke-dasharray="6 5" fill="none"/></svg>
+<span class="dot" style="left:52px;top:100px;background:#2A1B17"></span><span class="dot c" style="left:118px;top:78px;background:var(--ok)"></span><span class="dot" style="left:186px;top:46px;background:var(--pink)"></span></div>
+<div class="card"><div class="step d"><i>✓</i>Pesanan diterima</div><div class="step d"><i>✓</i>Sedang diracik</div><div class="step d"><i>✓</i>Siap, menunggu kurir</div><div class="step d n"><i>✓</i>Kurir menuju lokasimu</div><div class="step"><i></i>Pesanan sampai</div></div>
+<div class="tabs"><span>🏠<br>Beranda</span><b>🧾<br>Pesanan</b><span>👤<br>Akun</span></div>
+</div></div><div class="cap">Lacak pesanan<small>Status tiap tahap dan posisi kurir di peta, diperbarui tiap 5 detik.</small></div></div>
+</div>
+
+<p class="nt">Catatan desain: merah muda "Kangen" hanya dipakai untuk tindakan utama dan status aktif, jadi mata langsung tahu mana yang harus disentuh. Coklat roast dipakai untuk kepala layar dan navigasi, sedangkan latte untuk tempat gambar menu sampai foto produk asli ditambahkan.</p>
+</div></body></html>
